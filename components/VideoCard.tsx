@@ -16,12 +16,22 @@ interface IProps {
     post: Video;
 }
 
-const VideoCard: NextPage<IProps> = ({ post }
-) => {
+const VideoCard: NextPage<IProps> = ({ post }) => {
 
     const [isHover, setIsHover] = useState(false);
     const [playing, setPlaying] = useState(false);
     const [isVideoMuted, setIsVideoMuted] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const onVideoPress = () => {
+        if(playing) {
+            videoRef?.current?.pause();
+            setPlaying(false);
+        } else {
+            videoRef?.current?.play();
+            setPlaying(true);
+        }
+    };
     
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
@@ -64,22 +74,23 @@ const VideoCard: NextPage<IProps> = ({ post }
                  className='rounded-3xl'>
                     <Link href="/">
                         <video
-                        src={post.video.asset.url}
                         loop
+                        ref={videoRef}
+                        src={post.video.asset.url}
                         className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100'
                         >
+
                         </video>
                     </Link>
-
                     {isHover && (
                         <div>
                             {playing ? (
-                                <button>
+                                <button onClick={onVideoPress}>
                                     <BsFillPauseFill className='text-black text-2xl lg:text-4xl'/>
                                 </button>
                             ) : (
-                                <button>
-                                    <BsFillPlayFill />
+                                <button onClick={onVideoPress}>
+                                    <BsFillPlayFill className='text-black text-2xl lg:text-4xl'/>
                                 </button>
                             )}
                             {isVideoMuted ? (
@@ -88,7 +99,7 @@ const VideoCard: NextPage<IProps> = ({ post }
                                 </button>
                             ) : (
                                 <button>
-                                    <HiVolumeUp />
+                                    <HiVolumeUp className='text-black text-2xl lg:text-4xl'/>
                                 </button>
                             )}
                         </div>        
