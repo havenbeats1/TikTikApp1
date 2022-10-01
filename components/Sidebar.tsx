@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import GoogleLogin from 'react-google-login';
-import {AiFillHome, AiOutlineMenu } from 'react-icons/ai';
+import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
 import Discover from './Discover';
 import SuggestedAccounts from './SuggestedAccounts';
@@ -43,7 +43,7 @@ const Sidebar = () => {
                         <p className='text-gray-400'>Log in to like and comment on videos</p>
                         <div className='pr-4'>
                             <GoogleLogin 
-                            clientId=""
+                            clientId={`${process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN}`}
                             render={(renderProps) => (
                                 <button
                                 className='cursor-pointer bg-white text-lg text-[#F51997] border-[1px] border-[#F51997] font-semibold px-6 py-3 rounded-md outline-none w-full mt-3 hover:text-white hover:bg-[#F51997]'
